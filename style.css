@@ -136,3 +136,12 @@ h1,h2,h3{line-height:1.12;letter-spacing:-.02em}
 @media(max-width:1080px){.why-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){.hero{padding-bottom:150px}.why .container{margin-top:-110px}.why-panel{padding:1.6rem;border-radius:26px}}
 @media(max-width:560px){.why-grid{grid-template-columns:1fr}.why-card{padding:1.1rem}}
+/* paket rute */
+.pkg{display:flex;flex-direction:column}.pkg-body{display:flex;flex-direction:column;flex:1}.pkg .link{margin-top:auto}
+.dur{position:absolute;bottom:12px;left:14px;background:rgba(255,255,255,.9);color:var(--ink);font-size:.75rem;font-weight:700;padding:.35rem .75rem;border-radius:99px}
+.route{background:#f6f3ec;border-radius:16px;padding:1rem 1rem .6rem;margin:.2rem 0 1rem}
+.route-label{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--o2);margin-bottom:.6rem}
+.route ol{list-style:none;counter-reset:st;position:relative}
+.route li{counter-increment:st;position:relative;padding:0 0 .7rem 2rem;font-size:.84rem;line-height:1.45;color:var(--ink)}
+.route li:before{content:counter(st);position:absolute;left:0;top:-1px;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--g2),var(--g));color:#fff;font-size:.7rem;font-weight:700;display:grid;place-items:center;z-index:1}
+.route li:not(:last-child):after{content:'';position:absolute;left:10px;top:20px;bottom:0;border-left:2px dashed rgba(15,107,79,.3)}
