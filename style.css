@@ -120,3 +120,13 @@ h1,h2,h3{line-height:1.12;letter-spacing:-.02em}
  .gallery{grid-template-columns:1fr 1fr;grid-auto-rows:150px}.g5{grid-column:span 2}
  .glass-card{padding:1.5rem}.wa-txt{display:none}.wa{padding:.6rem}.feature{min-height:300px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+/* kenapa memilih kami */
+.why{overflow:hidden}.why:before{content:'';position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(242,159,61,.18),transparent 70%);top:-160px;right:-160px;pointer-events:none}
+.why:after{content:'';position:absolute;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(20,163,122,.18),transparent 70%);bottom:-180px;left:-160px;pointer-events:none}
+.why-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
+.why-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:var(--r);padding:1.7rem;transition:transform .4s,border-color .4s,background .4s}
+.why-card:hover{transform:translateY(-6px);border-color:rgba(242,159,61,.5);background:rgba(255,255,255,.08)}
+.why-card.wide{grid-column:span 2;display:flex;gap:1.2rem;align-items:center}.why-card.wide .icon{flex:none}
+.why-card h3{color:#fff;font-size:1.15rem;margin-bottom:.4rem}.why-card p{font-size:.9rem}
+@media(max-width:1080px){.why-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.why-grid{grid-template-columns:1fr}.why-card.wide{grid-column:span 1}}
