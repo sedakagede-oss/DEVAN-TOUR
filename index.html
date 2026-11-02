@@ -25,14 +25,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="alternate" hreflang="id" href="https://sedakagede-oss.github.io/devan-bali-tour/"><link rel="alternate" hreflang="en" href="https://sedakagede-oss.github.io/devan-bali-tour/?lang=en">
+<script>(function(){var l,q=new URLSearchParams(location.search).get('lang');if(q==='en'||q==='id')l=q;else{try{l=localStorage.getItem('dbt-lang')}catch(e){}if(!l)l=(navigator.language||'id').toLowerCase().indexOf('id')===0?'id':'en'}window.__lang=l;if(l==='en'){document.documentElement.lang='en';document.documentElement.className+=' i18n-wait'}})();</script>
+<style>.i18n-wait body{visibility:hidden}</style>
 </head>
-<body data-build="dbt-v6-asli-bali">
+<body data-build="dbt-v7-i18n">
 <div class="progress" id="progress"></div>
 <header class="nav" id="nav">
   <a href="#beranda" class="logo"><span class="logo-mark">D</span><span class="logo-text">DEVAN <b>BALI</b> TOUR</span></a>
   <nav class="menu" id="menu">
     <a href="#kenapa">Kenapa Kami</a><a href="#tentang">Tentang</a><a href="#destinasi">Destinasi</a><a href="#paket">Paket Tur</a><a href="#budaya">Budaya</a>
     <a href="#kuliner">Kuliner</a><a href="#tips">Tips</a><a href="#galeri">Galeri</a><a href="#kontak" class="menu-cta">Hubungi Kami</a>
+    <div class="lang" role="group" aria-label="Bahasa / Language"><button type="button" class="lang-btn" data-lang="id" lang="id">ID</button><button type="button" class="lang-btn" data-lang="en" lang="en">EN</button></div>
   </nav>
   <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false"><span></span><span></span></button>
 </header>
@@ -203,6 +207,7 @@
 
 <div class="wa" id="wa"><span class="wa-ico">💬</span><span class="wa-txt">WhatsApp segera hadir</span></div>
 <button class="totop" id="totop" aria-label="Kembali ke atas">↑</button>
+<script src="i18n.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

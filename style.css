@@ -164,3 +164,8 @@ h1,h2,h3{line-height:1.12;letter-spacing:-.02em}
 body.menu-lock{overflow:hidden;touch-action:none}
 body.menu-lock .wa,body.menu-lock .totop{display:none}
 @media(max-width:900px){.logo{position:relative;z-index:120}}
+.lang{display:inline-flex;margin-left:.4rem;padding:3px;border-radius:99px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px)}
+.lang-btn{border:0;background:transparent;color:#fff;font:700 .74rem/1 inherit;font-family:inherit;letter-spacing:.06em;padding:.45rem .7rem;border-radius:99px;cursor:pointer;opacity:.7;transition:.25s}
+.lang-btn:hover{opacity:1}.lang-btn.on{background:#fff;color:#0d1714;opacity:1;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+@media(max-width:900px){.lang{margin:1.2rem 0 0}.lang-btn{font-size:.95rem;padding:.65rem 1.2rem}}
+@media(prefers-reduced-motion:reduce){.lang-btn{transition:none}}
