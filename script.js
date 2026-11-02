@@ -5,7 +5,7 @@ function onScroll(){const y=scrollY,h=document.documentElement.scrollHeight-inne
  nav.classList.toggle('scrolled',y>40);totop.classList.toggle('show',y>700);prog.style.width=(h>0?y/h*100:0)+'%';
  if(!reduce){const bg=$('.hero-bg');if(bg&&y<innerHeight)bg.style.translate=`0 ${y*.25}px`;}}
 addEventListener('scroll',onScroll,{passive:true});onScroll();
-function toggle(o){menu.classList.toggle('open',o);burger.classList.toggle('open',o);burger.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':''}
+function toggle(o){menu.classList.toggle('open',o);burger.classList.toggle('open',o);burger.setAttribute('aria-expanded',o);document.body.classList.toggle('menu-lock',o);nav.classList.toggle('menu-open',o);burger.setAttribute('aria-label',o?'Tutup menu':'Buka menu')}
 burger.onclick=()=>toggle(!menu.classList.contains('open'));
 menu.querySelectorAll('a').forEach(a=>a.onclick=()=>toggle(false));
 totop.onclick=()=>scrollTo({top:0,behavior:reduce?'auto':'smooth'});
