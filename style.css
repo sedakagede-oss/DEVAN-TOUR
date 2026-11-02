@@ -183,3 +183,9 @@ body.menu-lock .wa,body.menu-lock .totop{display:none}
 @media(max-width:900px){.hero-inner{grid-template-areas:"mascot" "copy" "card"}.mascot{width:180px;margin:0 auto -.5rem}.bubble{right:-58px;font-size:.8rem;top:-8px}.logo-mark{width:38px!important;height:38px!important}}
 @media(prefers-reduced-motion:reduce){.mascot img,.bubble{animation:none}}
 .tagline{font-family:"Playfair Display";font-style:italic;color:var(--o);font-size:1.05rem;margin-bottom:.5rem}
+/* round logo */
+.mascot img{background:none;padding:0;border-radius:50%;box-shadow:0 18px 40px rgba(0,0,0,.4)}
+.mascot{width:310px}.bubble{top:0;right:-40px}
+.footer-logo{width:140px;background:none;padding:0;border-radius:50%;box-shadow:0 10px 26px rgba(0,0,0,.35)}
+.logo-mark{box-shadow:0 0 0 2px #f29f3d,0 4px 14px rgba(0,0,0,.3)!important}
+@media(max-width:900px){.mascot{width:190px}.bubble{right:-62px;top:4px}}
