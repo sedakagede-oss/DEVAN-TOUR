@@ -72,3 +72,7 @@ body.menu-lock{overflow:hidden}body.menu-lock .wa{display:none}
  .cats{grid-template-columns:repeat(3,1fr)}.grid3{grid-template-columns:1fr 1fr}.why,.story,.dgrid{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}.book{position:static}}
 @media(max-width:600px){.tb-info span:first-child{display:none}.cats{gap:.6rem}.cimgc{width:88px;height:88px}.cat{font-size:.76rem}.grid3,.reasons{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr}.brand img{width:46px;height:46px}.hero{height:560px}.sec{padding:3rem 0}.phero{height:320px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1s}
+.hero.has-video .hero-video{opacity:1}.hero.has-video .dots{display:none}
+.hero.has-video .hero-shade{background:linear-gradient(90deg,rgba(0,20,40,.72),rgba(0,20,40,.3))}
+@media(prefers-reduced-motion:reduce){.hero-video{display:none}}
