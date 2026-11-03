@@ -1,0 +1,47 @@
+{
+  "_info": "Diubah lewat /admin/. Kosongkan idr untuk menampilkan 'Harga segera hadir'.",
+  "paket": {
+    "kintamani": {
+      "idr": "",
+      "usd": "",
+      "catatan": "",
+      "catatan_en": "",
+      "aktif": false
+    },
+    "ubud": {
+      "idr": "",
+      "usd": "",
+      "catatan": "",
+      "catatan_en": "",
+      "aktif": false
+    },
+    "uluwatu": {
+      "idr": "",
+      "usd": "",
+      "catatan": "",
+      "catatan_en": "",
+      "aktif": false
+    },
+    "nusa-penida": {
+      "idr": "",
+      "usd": "",
+      "catatan": "",
+      "catatan_en": "",
+      "aktif": false
+    },
+    "tanah-lot": {
+      "idr": "",
+      "usd": "",
+      "catatan": "",
+      "catatan_en": "",
+      "aktif": false
+    },
+    "bedugul": {
+      "idr": "",
+      "usd": "",
+      "catatan": "",
+      "catatan_en": "",
+      "aktif": false
+    }
+  }
+}
