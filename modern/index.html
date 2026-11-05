@@ -24,7 +24,7 @@
 <meta name="theme-color" content="#0d1714">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="../booking.css">
 <link rel="alternate" hreflang="id" href="https://sedakagede-oss.github.io/devan-bali-tour/modern/"><link rel="alternate" hreflang="en" href="https://sedakagede-oss.github.io/devan-bali-tour/?lang=en">
 <script>(function(){var l,q=new URLSearchParams(location.search).get('lang');if(q==='en'||q==='id')l=q;else{try{l=localStorage.getItem('dbt-lang')}catch(e){}if(!l)l=(navigator.language||'id').toLowerCase().indexOf('id')===0?'id':'en'}window.__lang=l;if(l==='en'){document.documentElement.lang='en';document.documentElement.className+=' i18n-wait'}})();</script>
 <style>.i18n-wait body{visibility:hidden}</style>
@@ -35,7 +35,7 @@
   <a href="#beranda" class="logo"><span class="logo-mark"><img src="images/badge.webp" alt="" width="96" height="96"></span><span class="logo-text">DEVAN <b>TOUR</b></span></a>
   <nav class="menu" id="menu">
     <a href="#kenapa">Kenapa Kami</a><a href="#tentang">Tentang</a><a href="#destinasi">Destinasi</a><a href="#paket">Paket Tur</a><a href="#budaya">Budaya</a>
-    <a href="#kuliner">Kuliner</a><a href="#tips">Tips</a><a href="#galeri">Galeri</a><a href="#kontak" class="menu-cta">Hubungi Kami</a>
+    <a href="#kuliner">Kuliner</a><a href="#tips">Tips</a><a href="#galeri">Galeri</a><a href="#booking">Booking</a><a href="#kontak" class="menu-cta">Hubungi Kami</a>
     <div class="lang" role="group" aria-label="Bahasa / Language"><button type="button" class="lang-btn" data-lang="id" lang="id">ID</button><button type="button" class="lang-btn" data-lang="en" lang="en">EN</button></div>
     <div class="stylesw" role="group" aria-label="Tampilan situs"><span>Tampilan:</span><a href="../index.html?style=classic" data-style="classic">Klasik</a><a href="index.html" class="on" data-style="modern" aria-current="true">Modern</a></div>
   </nav>
@@ -195,6 +195,31 @@
   </div>
 </section>
 
+<section class="section booking" id="booking"><div class="wrap container bk-wrap"><div class="bk-head"><h2>Amankan Tanggal Liburanmu Sekarang!</h2>
+<p>Jelajahi Bali bersama pemandu lokal asli Bali. Slot tur kami terbatas setiap harinya — pesan lebih awal agar tanggal pilihanmu aman.</p></div>
+<form class="bk" novalidate data-wa="6285869633160">
+<div class="bk-grid">
+<label><span class="bk-l"><span>Nama lengkap</span> *</span><input name="nama" required autocomplete="name" placeholder="Nama Anda"></label>
+<label><span class="bk-l"><span>Negara / asal (opsional)</span></span><input name="negara" autocomplete="country-name" placeholder="Contoh: Indonesia"></label>
+<label><span class="bk-l"><span>No. WhatsApp / email</span> *</span><input name="kontak" required placeholder="+62 … / nama@email.com"></label>
+<label><span class="bk-l"><span>Paket tur</span> *</span><select name="paket" required><option value="kintamani">Tur Kintamani</option><option value="ubud">Tur Ubud</option><option value="uluwatu">Tur Uluwatu &amp; Kecak</option><option value="nusa-penida">Tur Nusa Penida Barat</option><option value="tanah-lot">Tur Tanah Lot</option><option value="bedugul">Tur Bedugul</option></select></label>
+<label><span class="bk-l"><span>Pilihan durasi</span> *</span><select name="durasi" required></select></label>
+<label><span class="bk-l"><span>Tanggal tur</span> *</span><input type="date" name="tanggal" required></label>
+<label><span class="bk-l"><span>Jumlah orang</span> *</span><input type="number" name="pax" min="1" max="50" value="2" required inputmode="numeric"></label>
+<label><span class="bk-l"><span>Lokasi jemput (hotel/villa)</span> *</span><input name="jemput" required placeholder="Nama hotel & area"></label>
+<label class="bk-wide">Catatan (opsional)<textarea name="catatan" rows="3" placeholder="Permintaan khusus, umur anak, dll."></textarea></label>
+</div>
+<div class="bk-sum" aria-live="polite"><div><span>Harga paket</span><b class="bk-price">—</b></div><div><span>Deposit minimal (40%)</span><b class="bk-dep">—</b></div></div>
+<div class="bk-pay"><b>Metode pembayaran deposit</b>
+<div class="bk-chips"><span>QRIS</span><span>DANA</span><span>OVO</span><span>GoPay</span></div>
+<p>Pembayaran via QRIS / e-wallet. Kode QRIS dikirim via WhatsApp.</p>
+<!-- QRIS: letakkan file images/qris.png (gambar kode QRIS) — otomatis tampil bila file ada. Nomor e-wallet: isi teks di dalam <span class="bk-ew"> lalu hapus atribut hidden. -->
+<img class="bk-qris" src="../images/qris.png" alt="QRIS DEVAN TOUR" hidden onload="this.hidden=false" width="220" height="220" loading="lazy">
+<p class="bk-ew" hidden></p></div>
+<label class="bk-chk"><input type="checkbox" name="setuju" required> <span class="bk-l"><span>Deposit minimal 40% dari total harga. Bila tamu membatalkan, deposit hangus (tidak dapat dikembalikan).</span></label>
+<p class="bk-err" role="alert" hidden></p>
+<button class="btn full bk-btn" type="submit">Kirim Booking via WhatsApp</button>
+</form></div></section>
 <section class="cta-band">
   <div class="container reveal"><h2>Siap menjelajahi Bali?</h2><p>Paket dan jadwal tur DEVAN TOUR segera hadir.</p><a href="#kontak" class="btn btn-primary">Hubungi Kami</a></div>
 </section>
@@ -214,6 +239,7 @@
 <button class="totop" id="totop" aria-label="Kembali ke atas">↑</button>
 <script src="i18n.js"></script>
 <script src="script.js"></script>
+<script src="../booking.js" data-base="../"></script>
 <script>document.querySelectorAll(".stylesw a").forEach(function(a){a.addEventListener("click",function(e){if(a.classList.contains("on")){e.preventDefault();return}try{localStorage.setItem("dbt-style",a.dataset.style)}catch(x){}})});</script>
 </body>
 </html>
