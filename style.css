@@ -99,3 +99,11 @@ body.menu-lock{overflow:hidden}body.menu-lock .wa{display:none}
 @media(max-width:600px){.stop{grid-template-columns:1fr;text-align:center}.stop img{margin:0 auto;width:130px;height:130px}}
 .phero>picture img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%}
 .stop{box-shadow:var(--shadow)}.pbox b{color:var(--pri)}.topbar a,.footer a{color:inherit}
+.flyer{display:block;max-width:520px;background:var(--bg2);padding:10px;border-radius:16px;border:1px solid var(--line)}.flyer img{width:100%;height:auto;aspect-ratio:1131/1600;object-fit:contain;box-shadow:none;border-radius:10px}
+.stop img{aspect-ratio:1/1;object-position:center}
+@media(max-width:600px){.flyer{max-width:100%}.phero>picture img{object-position:center 35%}}
+/* v14b art direction */
+.stop{grid-template-columns:300px 1fr}.stop img{width:300px;height:auto;aspect-ratio:3/2;border-radius:12px;object-fit:cover}
+@media(max-width:600px){.stop{grid-template-columns:1fr;text-align:left;padding:.8rem}.stop img{width:100%;height:auto;aspect-ratio:4/5;margin:0}
+.phero-ubud{height:auto;aspect-ratio:4/5;min-height:0}.phero-ubud>picture img{object-position:center top}}
+@media(max-width:600px){.phero-ubud{display:block;aspect-ratio:auto;height:auto;background:#0f1620}.phero-ubud>picture img{position:static;display:block;width:100%;height:auto;aspect-ratio:4/5}.phero-ubud .hero-shade{display:none}.phero-ubud .wrap{position:relative;padding:1rem 1.2rem 1.4rem}.phero-ubud h1{font-size:1.5rem}}
