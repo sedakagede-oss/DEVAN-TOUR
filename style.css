@@ -86,3 +86,16 @@ body.menu-lock{overflow:hidden}body.menu-lock .wa{display:none}
 @media(prefers-reduced-motion:reduce){.mascot img,.bubble{animation:none}}
 .price.has-price{color:var(--tx);font-weight:500}.price.has-price b{color:var(--acc);font-size:1.05em}.price .usd,.price .pnote-i{color:var(--mut);font-weight:400}
 .price.big.has-price{font-size:1rem}.price.big.has-price b{font-size:1.5rem}.price .pnote{display:block;color:var(--mut);font-size:.85rem;margin-top:.2rem}
+/* v14 ubud */
+.stops{list-style:none;padding:0;margin:1rem 0;display:grid;gap:1.1rem}
+.stop{display:grid;grid-template-columns:150px 1fr;gap:1.1rem;align-items:center;background:var(--card,#fff);border-radius:16px;padding:1rem;box-shadow:0 4px 18px rgba(0,0,0,.07)}
+.stop img{width:150px;height:150px;border-radius:50%;object-fit:cover;display:block}
+.stop h3{margin:.2rem 0 .4rem;font-size:1.1rem}.stop p{margin:0;line-height:1.6}
+.stop .sn{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#1a73c8;color:#fff;font-weight:700;font-size:.85rem}
+.flyer img{width:100%;max-width:520px;height:auto;border-radius:14px;display:block;box-shadow:0 6px 24px rgba(0,0,0,.15)}
+.pbox{display:grid;gap:.6rem;margin-bottom:1rem}.pbox div{display:flex;justify-content:space-between;gap:.6rem;align-items:baseline;border-bottom:1px dashed rgba(127,127,127,.35);padding-bottom:.5rem}
+.pbox b{font-size:1.15rem;color:#1a73c8;white-space:nowrap}
+[data-theme=dark] .stop{background:#16202b;box-shadow:none}[data-theme=dark] .pbox b{color:#6fb3ff}
+@media(max-width:600px){.stop{grid-template-columns:1fr;text-align:center}.stop img{margin:0 auto;width:130px;height:130px}}
+.phero>picture img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%}
+.stop{box-shadow:var(--shadow)}.pbox b{color:var(--pri)}.topbar a,.footer a{color:inherit}

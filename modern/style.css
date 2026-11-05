@@ -96,7 +96,7 @@ h1,h2,h3{line-height:1.12;letter-spacing:-.02em}
 .cta-band h2{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;margin-bottom:.5rem}.cta-band p{opacity:.9;margin-bottom:1.6rem}
 .footer{background:var(--dk);color:#a9bab4;padding:70px 0 24px}.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:2rem}
 .footer h4{color:#fff;margin-bottom:.8rem}.footer p{font-size:.92rem;margin-top:.4rem}.credit{text-align:center;margin-top:3rem;font-size:.8rem;opacity:.6}
-.wa{position:fixed;left:20px;bottom:20px;z-index:90;display:flex;align-items:center;gap:.5rem;background:rgba(13,23,20,.8);backdrop-filter:blur(12px);color:#fff;padding:.6rem 1rem .6rem .6rem;border-radius:99px;font-size:.82rem;font-weight:600;border:1px solid rgba(255,255,255,.15);cursor:default}
+.wa{position:fixed;left:20px;bottom:20px;z-index:90;display:flex;align-items:center;gap:.5rem;background:rgba(13,23,20,.8);backdrop-filter:blur(12px);color:#fff;padding:.6rem 1rem .6rem .6rem;border-radius:99px;font-size:.82rem;font-weight:600;border:1px solid rgba(255,255,255,.15);cursor:pointer;text-decoration:none}
 .wa-ico{width:34px;height:34px;border-radius:50%;background:#25d366;display:grid;place-items:center}
 .totop{position:fixed;right:20px;bottom:20px;z-index:90;width:50px;height:50px;border-radius:50%;border:0;background:linear-gradient(135deg,var(--o),var(--o2));color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:0 10px 30px -8px rgba(255,122,69,.7);opacity:0;transform:translateY(20px);pointer-events:none;transition:.35s}
 .totop.show{opacity:1;transform:none;pointer-events:auto}

@@ -9,7 +9,9 @@
       if(!p||!p.aktif||!idr){if(el.dataset.done){el.innerHTML=el.dataset.orig;delete el.dataset.done}return}
       if(!el.dataset.done)el.dataset.orig=el.innerHTML;el.dataset.done=1;
       var usd=num(p.usd),note=en?(p.catatan_en||p.catatan):p.catatan;
-      var h='<b>Rp '+idr.toLocaleString('id-ID')+'</b>'+(en?' / person':' / orang');
+      var rp='Rp '+idr.toLocaleString('id-ID');if(el.dataset.only){el.textContent=rp;return}
+      var u=('satuan' in p)?(en?(p.satuan_en!=null?p.satuan_en:p.satuan):p.satuan):(en?'/ person':'/ orang');
+      var h='<b>'+rp+'</b>'+(u?' '+String(u).replace(/[<>&]/g,''):'');
       if(usd)h+=' <small class="usd">≈ US$'+usd.toLocaleString('en-US')+'</small>';
       if(note&&el.dataset.full)h+='<small class="pnote">'+String(note).replace(/[<>&]/g,'')+'</small>';
       else if(note)h+=' <small class="pnote-i">· '+String(note).replace(/[<>&]/g,'')+'</small>';

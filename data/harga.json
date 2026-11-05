@@ -9,11 +9,13 @@
       "aktif": false
     },
     "ubud": {
-      "idr": "",
+      "idr": "700000",
       "usd": "",
-      "catatan": "",
-      "catatan_en": "",
-      "aktif": false
+      "catatan": "Full day (8–10 jam)",
+      "catatan_en": "Full day (8–10 hours)",
+      "aktif": true,
+      "satuan": "",
+      "satuan_en": ""
     },
     "uluwatu": {
       "idr": "",
