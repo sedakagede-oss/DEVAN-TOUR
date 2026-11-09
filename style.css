@@ -107,3 +107,14 @@ body.menu-lock{overflow:hidden}body.menu-lock .wa{display:none}
 @media(max-width:600px){.stop{grid-template-columns:1fr;text-align:left;padding:.8rem}.stop img{width:100%;height:auto;aspect-ratio:4/5;margin:0}
 .phero-ubud{height:auto;aspect-ratio:4/5;min-height:0}.phero-ubud>picture img{object-position:center top}}
 @media(max-width:600px){.phero-ubud{display:block;aspect-ratio:auto;height:auto;background:#0f1620}.phero-ubud>picture img{position:static;display:block;width:100%;height:auto;aspect-ratio:4/5}.phero-ubud .hero-shade{display:none}.phero-ubud .wrap{position:relative;padding:1rem 1.2rem 1.4rem}.phero-ubud h1{font-size:1.5rem}}
+
+.sharebar{margin:1rem 0 .2rem}
+.sharebar-l{font-weight:600;font-size:.88rem;margin:0 0 .45rem}
+.sharebar-row{display:flex;flex-wrap:wrap;gap:.4rem}
+.sharebtn{display:inline-flex;align-items:center;gap:.35rem;padding:.45rem .75rem;border-radius:99px;border:1px solid var(--line,#d5dde6);background:var(--card,#fff);color:inherit;font:600 .78rem/1 inherit;font-family:inherit;text-decoration:none;cursor:pointer}
+.sharebtn svg{width:16px;height:16px;flex:0 0 auto}
+.share-wa{background:#25D366;color:#fff;border-color:#1ebe5d}
+.share-fb{background:#1877F2;color:#fff;border-color:#166fe5}
+.share-tg{background:#229ED9;color:#fff;border-color:#1c8ec4}
+.share-copy,.share-native{background:transparent}
+.sharebar-card{margin:.75rem 0 0}
