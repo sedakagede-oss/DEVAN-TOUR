@@ -18,7 +18,8 @@
       el.innerHTML=h;el.classList.add('has-price');
     });
   }
-  fetch(base+'data/harga.json?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){data=d;render()}).catch(function(){});
+  function loadHarga(url){return fetch(url,{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('harga');return r.json()})}
+  loadHarga('/api/harga?v='+Date.now()).catch(function(){return loadHarga(base+'data/harga.json?v='+Date.now())}).then(function(d){data=d;render()}).catch(function(){});
   new MutationObserver(function(){setTimeout(render,0)}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
   window.renderHarga=function(d){if(d)data=d;render()};
 })();

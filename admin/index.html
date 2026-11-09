@@ -22,67 +22,108 @@ button{font:600 1rem Poppins,sans-serif;border:0;border-radius:8px;padding:.75re
 </style>
 </head>
 <body>
-<header><div class="w"><img src="../images/logo-round-sm.png" alt=""><div><h1>Admin Harga Paket — DEVAN TOUR</h1><div style="font-size:.8rem;opacity:.9">Ubah harga tur, lalu tekan Simpan. Website diperbarui ±1 menit kemudian.</div></div></div></header>
+<header><div class="w"><img src="../images/logo-round-sm.png" alt=""><div><h1>Admin Harga Paket — DEVAN TOUR</h1><div style="font-size:.8rem;opacity:.9">Ubah harga tur, lalu tekan Simpan. Perubahan langsung tampil di website.</div></div></div></header>
 <main class="w">
 <section class="box" id="login">
-<h2>1. Masuk</h2>
-<label for="tok">Token GitHub (fine-grained)</label>
-<input type="password" id="tok" autocomplete="off" placeholder="github_pat_...">
-<p class="hint">Token hanya disimpan di browser komputer ini, tidak dikirim ke mana pun selain GitHub. Cara membuat token: lihat panduan.</p>
-<label class="tg"><input type="checkbox" id="remember"> Ingat token di komputer ini</label>
+<h2 id="ltitle">Masuk</h2>
+<label for="pw" id="plabel">Kata sandi</label>
+<input type="password" id="pw" autocomplete="current-password" placeholder="Kata sandi admin">
+<p class="hint" id="phint">Kata sandi hanya untuk kamu. Tidak perlu token GitHub.</p>
+<label class="tg" id="remember-row"><input type="checkbox" id="remember"> Ingat di komputer ini</label>
 <p style="margin-top:1rem"><button id="go">Masuk</button> <button class="sec" id="out" hidden>Keluar</button></p>
 <p id="lmsg" class="hint"></p>
 </section>
 <form id="form" hidden></form>
 </main>
-<div class="bar" id="bar" hidden><div class="w"><button id="save">💾 Simpan Harga</button><a href="../" target="_blank">Lihat website ↗</a><span id="msg"></span></div></div>
+<div class="bar" id="bar" hidden><div class="w"><button id="save">Simpan Harga</button><a href="../" target="_blank">Lihat website ↗</a><span id="msg"></span></div></div>
 <script>
-const REPO='sedakagede-oss/DEVAN-TOUR',PATH='data/harga.json',API='https://api.github.com/repos/'+REPO+'/contents/'+PATH;
 const NAMES={'kintamani':'Tur Kintamani','ubud':'Tur Ubud','uluwatu':'Tur Uluwatu & Kecak','nusa-penida':'Tur Nusa Penida Barat','tanah-lot':'Tur Tanah Lot','bedugul':'Tur Bedugul'};
-let sha=null,data=null;const $=id=>document.getElementById(id);
-const getTok=()=>sessionStorage.getItem('dbt-admin-token')||localStorage.getItem('dbt-admin-token')||'';
-function hdr(){return{'Authorization':'Bearer '+getTok(),'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'}}
-const b64d=s=>new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\n/g,'')),c=>c.charCodeAt(0)));
-const b64e=s=>{const b=new TextEncoder().encode(s);let r='';b.forEach(c=>r+=String.fromCharCode(c));return btoa(r)};
+let data=null,setupNeeded=false;
+const $=id=>document.getElementById(id);
+const getPw=()=>sessionStorage.getItem('dbt-admin-pw')||localStorage.getItem('dbt-admin-pw')||'';
+const setPw=(p,remember)=>{sessionStorage.setItem('dbt-admin-pw',p);if(remember)localStorage.setItem('dbt-admin-pw',p)};
+const clearPw=()=>{sessionStorage.removeItem('dbt-admin-pw');localStorage.removeItem('dbt-admin-pw')};
 const digits=v=>String(v||'').replace(/[^\d]/g,'');
 const fmt=v=>digits(v)?'Rp '+parseInt(digits(v),10).toLocaleString('id-ID'):'';
+function authHeaders(){return {'content-type':'application/json','x-admin-password':getPw()}}
+function showSetup(on){
+  setupNeeded=on;
+  $('ltitle').textContent=on?'Buat kata sandi admin':'Masuk';
+  $('plabel').textContent=on?'Buat kata sandi (minimal 8 karakter)':'Kata sandi';
+  $('pw').placeholder=on?'Buat kata sandi baru':'Kata sandi admin';
+  $('pw').autocomplete=on?'new-password':'current-password';
+  $('phint').textContent=on?'Pilih kata sandi yang mudah kamu ingat. Ini hanya perlu sekali, lalu kamu masuk dengan kata sandi itu.':'Kata sandi hanya untuk kamu. Tidak perlu token GitHub.';
+  $('go').textContent=on?'Simpan kata sandi':'Masuk';
+}
+async function status(){
+  const r=await fetch('/api/admin/status?t='+Date.now(),{cache:'no-store'});
+  if(!r.ok)throw new Error('status');
+  return r.json();
+}
 async function load(){
   $('lmsg').textContent='Memuat…';
-  const r=await fetch(API+'?ref=main&t='+Date.now(),{headers:hdr(),cache:'no-store'});
-  if(r.status===401||r.status===403){$('lmsg').innerHTML='<span class="err">Token salah, kedaluwarsa, atau tidak punya izin. Cek panduan.</span>';return false}
-  if(!r.ok){$('lmsg').innerHTML='<span class="err">Gagal memuat ('+r.status+').</span>';return false}
-  const j=await r.json();sha=j.sha;data=JSON.parse(b64d(j.content));build();
-  $('lmsg').innerHTML='<span class="ok">✓ Berhasil masuk.</span>';$('out').hidden=false;$('go').hidden=true;$('tok').closest('section').querySelectorAll('input').forEach(i=>i.disabled=true);return true}
+  const r=await fetch('/api/harga?t='+Date.now(),{headers:authHeaders(),cache:'no-store'});
+  if(r.status===401){$('lmsg').innerHTML='<span class="err">Kata sandi salah.</span>';return false}
+  if(!r.ok){$('lmsg').innerHTML='<span class="err">Gagal memuat harga ('+r.status+').</span>';return false}
+  data=await r.json();build();
+  $('lmsg').innerHTML='<span class="ok">Berhasil masuk.</span>';$('out').hidden=false;$('go').hidden=true;$('pw').disabled=true;$('remember').disabled=true;return true
+}
 function build(){
   const f=$('form');f.innerHTML='';
-  for(const k in NAMES){const p=data.paket[k]||(data.paket[k]={idr:'',usd:'',catatan:'',catatan_en:'',aktif:false});
+  for(const k in NAMES){const p=data.paket[k]||(data.paket[k]={idr:'',idr_half:'',usd:'',catatan:'',catatan_en:'',aktif:false});
     const s=document.createElement('section');s.className='box';s.dataset.k=k;
     s.innerHTML=`<h2>${NAMES[k]}</h2><div class="g">
-<div><label>Harga per orang (Rupiah)</label><input type="text" inputmode="numeric" name="idr" placeholder="contoh: 750000"><div class="pv"></div></div>
-<div><label>Harga per orang (US$) — boleh kosong</label><input type="text" inputmode="numeric" name="usd" placeholder="contoh: 50"></div>
+<div><label>Harga full day (Rupiah)</label><input type="text" inputmode="numeric" name="idr" placeholder="contoh: 700000"><div class="pv" data-for="idr"></div></div>
+<div><label>Harga half day (Rupiah) — boleh kosong</label><input type="text" inputmode="numeric" name="idr_half" placeholder="contoh: 500000"><div class="pv" data-for="idr_half"></div></div>
+<div><label>Harga (US$) — boleh kosong</label><input type="text" inputmode="numeric" name="usd" placeholder="contoh: 50"></div>
 <div><label>Catatan (Indonesia) — boleh kosong</label><input type="text" name="catatan" placeholder="contoh: min. 2 orang"></div>
 <div><label>Catatan (Inggris) — boleh kosong</label><input type="text" name="catatan_en" placeholder="example: min. 2 people"></div></div>
 <label class="tg"><input type="checkbox" name="aktif"> Tampilkan harga ini di website</label>
 <p class="hint">Jika harga kosong atau kotak ini tidak dicentang, website menampilkan “Harga segera hadir”.</p>`;
-    for(const n of ['idr','usd','catatan','catatan_en'])s.querySelector(`[name=${n}]`).value=p[n]||'';
+    for(const n of ['idr','idr_half','usd','catatan','catatan_en'])s.querySelector('[name='+n+']').value=p[n]||'';
     s.querySelector('[name=aktif]').checked=!!p.aktif;
-    const pv=()=>s.querySelector('.pv').textContent=fmt(s.querySelector('[name=idr]').value);s.querySelector('[name=idr]').oninput=pv;pv();
+    const paint=()=>{s.querySelector('[data-for=idr]').textContent=fmt(s.querySelector('[name=idr]').value);s.querySelector('[data-for=idr_half]').textContent=fmt(s.querySelector('[name=idr_half]').value)};
+    s.querySelector('[name=idr]').oninput=paint;s.querySelector('[name=idr_half]').oninput=paint;paint();
     f.appendChild(s)}
   f.hidden=false;$('bar').hidden=false}
-$('go').onclick=async()=>{const t=$('tok').value.trim();if(!t){$('lmsg').textContent='Isi token dulu.';return}
-  sessionStorage.setItem('dbt-admin-token',t);if($('remember').checked)localStorage.setItem('dbt-admin-token',t);
-  if(!await load()){sessionStorage.removeItem('dbt-admin-token');localStorage.removeItem('dbt-admin-token')}};
-$('out').onclick=()=>{sessionStorage.removeItem('dbt-admin-token');localStorage.removeItem('dbt-admin-token');location.reload()};
+$('go').onclick=async()=>{
+  const t=$('pw').value.trim();
+  $('lmsg').textContent='';
+  if(setupNeeded){
+    if(t.length<8){$('lmsg').innerHTML='<span class="err">Kata sandi minimal 8 karakter.</span>';return}
+    const r=await fetch('/api/admin/setup',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:t})});
+    if(r.status===409){$('lmsg').innerHTML='<span class="err">Kata sandi sudah dibuat. Masuk dengan kata sandi yang ada.</span>';showSetup(false);return}
+    if(!r.ok){$('lmsg').innerHTML='<span class="err">Gagal menyimpan kata sandi.</span>';return}
+    setPw(t,$('remember').checked);showSetup(false);await load();return;
+  }
+  if(!t){$('lmsg').textContent='Isi kata sandi dulu.';return}
+  setPw(t,$('remember').checked);
+  const r=await fetch('/api/admin/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:t})});
+  if(!r.ok){clearPw();$('lmsg').innerHTML='<span class="err">Kata sandi salah.</span>';return}
+  if(!await load())clearPw();
+};
+$('out').onclick=()=>{clearPw();location.reload()};
 $('save').onclick=async()=>{
   const m=$('msg');m.className='';m.textContent='Menyimpan…';
   document.querySelectorAll('#form section').forEach(s=>{const p=data.paket[s.dataset.k];
-    p.idr=digits(s.querySelector('[name=idr]').value);p.usd=digits(s.querySelector('[name=usd]').value);
-    p.catatan=s.querySelector('[name=catatan]').value.trim();p.catatan_en=s.querySelector('[name=catatan_en]').value.trim();p.aktif=s.querySelector('[name=aktif]').checked});
-  const r=await fetch(API,{method:'PUT',headers:hdr(),body:JSON.stringify({message:'Update harga paket (admin)',content:b64e(JSON.stringify(data,null,2)+'\n'),sha,branch:'main'})});
-  if(r.ok){sha=(await r.json()).content.sha;m.className='ok';m.textContent='✓ Tersimpan! Website berubah dalam ±1 menit.'}
-  else if(r.status===409){m.className='err';m.textContent='Data berubah di tempat lain. Muat ulang halaman lalu coba lagi.'}
-  else{m.className='err';m.textContent='Gagal menyimpan ('+r.status+'). Cek token/izin.'}};
-if(getTok()){$('tok').value='••••••••';load()}
+    p.idr=digits(s.querySelector('[name=idr]').value);
+    p.idr_half=digits(s.querySelector('[name=idr_half]').value);
+    p.usd=digits(s.querySelector('[name=usd]').value);
+    p.catatan=s.querySelector('[name=catatan]').value.trim();
+    p.catatan_en=s.querySelector('[name=catatan_en]').value.trim();
+    p.aktif=s.querySelector('[name=aktif]').checked});
+  const r=await fetch('/api/harga',{method:'POST',headers:authHeaders(),body:JSON.stringify(data)});
+  if(r.ok){m.className='ok';m.textContent='Tersimpan! Harga sudah tampil di website.'}
+  else if(r.status===401){m.className='err';m.textContent='Sesi habis. Masuk lagi, lalu simpan.'}
+  else{m.className='err';m.textContent='Gagal menyimpan ('+r.status+').'}
+};
+(async()=>{
+  try{
+    const st=await status();
+    showSetup(!!st.setupNeeded);
+    if(!st.setupNeeded && getPw()){$('pw').value='••••••••';const ok=await load();if(!ok)$('pw').value=''}
+  }catch(e){$('lmsg').innerHTML='<span class="err">Tidak bisa menghubungi admin. Pastikan kamu membuka situs Cloudflare.</span>'}
+})();
 </script>
 </body>
 </html>

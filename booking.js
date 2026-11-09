@@ -48,5 +48,6 @@
   }
   var fs=document.querySelectorAll('form.bk');if(!fs.length)return;
   fs.forEach(init);
-  fetch(base+'data/harga.json?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){data=d;fs.forEach(function(f){fillDur(f);upd(f)})}).catch(function(){});
+  function loadHarga(url){return fetch(url,{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('harga');return r.json()})}
+  loadHarga('/api/harga?v='+Date.now()).catch(function(){return loadHarga(base+'data/harga.json?v='+Date.now())}).then(function(d){data=d;fs.forEach(function(f){fillDur(f);upd(f)})}).catch(function(){});
 })();
