@@ -19,11 +19,14 @@
       "satuan_en": ""
     },
     "uluwatu": {
-      "idr": "",
+      "idr": "700000",
+      "idr_half": "500000",
       "usd": "",
-      "catatan": "",
-      "catatan_en": "",
-      "aktif": false
+      "catatan": "Full day (8–10 jam)",
+      "catatan_en": "Full day (8–10 hours)",
+      "aktif": true,
+      "satuan": "",
+      "satuan_en": ""
     },
     "nusa-penida": {
       "idr": "",
