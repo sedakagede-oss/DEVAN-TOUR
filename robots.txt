@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://sedakagede-oss.github.io/devan-bali-tour/sitemap.xml
+Sitemap: https://devan-tour.pages.dev/sitemap.xml

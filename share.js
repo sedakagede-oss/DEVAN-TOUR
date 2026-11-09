@@ -1,8 +1,9 @@
 /* Tombol bagikan halaman paket DEVAN TOUR: WhatsApp, Facebook, Telegram, salin tautan. */
 (function(){
   function t(s){return window.t?window.t(s):s}
-  function abs(u){try{return new URL(u,location.href).href}catch(e){return u}}
-  function cleanUrl(u){return String(u||'').split('#')[0]}
+  function toPublic(u){try{var x=new URL(u,location.href);if(x.hostname==='sedakagede-oss.github.io'){x.protocol='https:';x.host='devan-tour.pages.dev';x.pathname=x.pathname.replace(/^\/DEVAN-TOUR\/?/,'/').replace(/^\/devan-bali-tour\/?/,'/')}return x.href.split('#')[0]}catch(e){return String(u||'').split('#')[0]}}
+  function abs(u){return toPublic(u)}
+  function cleanUrl(u){return toPublic(u)}
   function pageTitle(scope){
     if(scope){var h=scope.querySelector('h1,h3');if(h&&h.textContent.trim())return h.textContent.trim()}
     var h1=document.querySelector('main h1,h1');
