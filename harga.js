@@ -5,7 +5,7 @@
   function render(){
     if(!data||!data.paket)return;var en=document.documentElement.lang==='en';
     document.querySelectorAll('[data-harga]').forEach(function(el){
-      var p=data.paket[el.dataset.harga],idr=p&&num(p.idr);
+      var p=data.paket[el.dataset.harga],idr=p&&num(el.dataset.half?p.idr_half:p.idr);
       if(!p||!p.aktif||!idr){if(el.dataset.done){el.innerHTML=el.dataset.orig;delete el.dataset.done}return}
       if(!el.dataset.done)el.dataset.orig=el.innerHTML;el.dataset.done=1;
       var usd=num(p.usd),note=en?(p.catatan_en||p.catatan):p.catatan;

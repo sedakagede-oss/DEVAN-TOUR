@@ -9,9 +9,13 @@
   function durLabel(d){return d==='full'?L('Full day (8–10 jam)','Full day (8–10 hours)'):L('Half day','Half day')}
   function calc(f){
     var s=f.paket.value,d=f.durasi.value,pax=Math.max(1,num(f.pax.value)||1),p=data&&data.paket&&data.paket[s];
-    var dur=DUR[s]||['full'],idr=p&&p.aktif?num(p.idr):0;
-    // harga di harga.json berlaku untuk durasi utama paket (yang pertama)
-    if(!idr||d!==dur[0])return {txt:L('Menyusul','To be confirmed'),dep:L('Menyusul','To be confirmed'),total:0};
+    var dur=DUR[s]||['full'];
+    var idr=0;
+    if(p&&p.aktif){
+      if(d==='half')idr=num(p.idr_half);
+      else if(d===dur[0]||d==='full')idr=num(p.idr);
+    }
+    if(!idr)return {txt:L('Menyusul','To be confirmed'),dep:L('Menyusul','To be confirmed'),total:0};
     var per=!('satuan' in p);var total=per?idr*pax:idr;
     return {txt:rp(total)+(per?' ('+rp(idr)+L(' × '+pax+' orang',' × '+pax+' people')+')':L(' / tur',' / tour')),dep:rp(Math.ceil(total*0.4)),total:total};
   }
@@ -19,7 +23,9 @@
     var cur=f.durasi.value,dur=DUR[f.paket.value]||['full'];
     f.durasi.innerHTML='';
     ['full','half'].forEach(function(d){var o=document.createElement('option');o.value=d;
-      var ok=dur.indexOf(d)>=0;o.textContent=durLabel(d)+(ok?(d!==dur[0]?L(' — harga menyusul',' — price TBC'):''):L(' — tidak tersedia',' — not available'));o.disabled=!ok;f.durasi.appendChild(o)});
+      var ok=dur.indexOf(d)>=0;
+      var priced=ok&&data&&data.paket&&data.paket[f.paket.value]&&((d==='half')?num(data.paket[f.paket.value].idr_half):num(data.paket[f.paket.value].idr));
+      o.textContent=durLabel(d)+(ok?(priced?'':L(' — harga menyusul',' — price TBC')):L(' — tidak tersedia',' — not available'));o.disabled=!ok;f.durasi.appendChild(o)});
     f.durasi.value=dur.indexOf(cur)>=0?cur:dur[0];
   }
   function upd(f){var c=calc(f);f.querySelector('.bk-price').textContent=c.txt;f.querySelector('.bk-dep').textContent=c.dep}
@@ -42,5 +48,5 @@
   }
   var fs=document.querySelectorAll('form.bk');if(!fs.length)return;
   fs.forEach(init);
-  fetch(base+'data/harga.json?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){data=d;fs.forEach(upd)}).catch(function(){});
+  fetch(base+'data/harga.json?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){data=d;fs.forEach(function(f){fillDur(f);upd(f)})}).catch(function(){});
 })();
