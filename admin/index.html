@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="id">
 <head>
+<script>if(location.hostname==='sedakagede-oss.github.io'){var p=location.pathname.replace(/^\/DEVAN-TOUR\/?/,'/').replace(/^\/devan-bali-tour\/?/,'/');location.replace('https://devan-tour.pages.dev'+p+location.search+location.hash)}</script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Admin Harga — DEVAN TOUR</title>
@@ -36,7 +37,7 @@ button{font:600 1rem Poppins,sans-serif;border:0;border-radius:8px;padding:.75re
 </main>
 <div class="bar" id="bar" hidden><div class="w"><button id="save">💾 Simpan Harga</button><a href="../" target="_blank">Lihat website ↗</a><span id="msg"></span></div></div>
 <script>
-const REPO='sedakagede-oss/devan-bali-tour',PATH='data/harga.json',API='https://api.github.com/repos/'+REPO+'/contents/'+PATH;
+const REPO='sedakagede-oss/DEVAN-TOUR',PATH='data/harga.json',API='https://api.github.com/repos/'+REPO+'/contents/'+PATH;
 const NAMES={'kintamani':'Tur Kintamani','ubud':'Tur Ubud','uluwatu':'Tur Uluwatu & Kecak','nusa-penida':'Tur Nusa Penida Barat','tanah-lot':'Tur Tanah Lot','bedugul':'Tur Bedugul'};
 let sha=null,data=null;const $=id=>document.getElementById(id);
 const getTok=()=>sessionStorage.getItem('dbt-admin-token')||localStorage.getItem('dbt-admin-token')||'';
