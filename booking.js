@@ -1,7 +1,7 @@
 /* Form booking DEVAN TOUR → WhatsApp. Harga dari data/harga.json, deposit 40%. */
 (function(){
   var me=document.currentScript,base=(me&&me.dataset.base)||'',data=null;
-  var DUR={ubud:['full','half'],uluwatu:['full','half']};
+  var DUR={kintamani:['full','half'],ubud:['full','half'],uluwatu:['full','half']};
   function en(){return document.documentElement.lang==='en'}
   function L(i,e){return en()?e:i}
   function num(v){v=String(v==null?'':v).replace(/[^\d]/g,'');return v?parseInt(v,10):0}

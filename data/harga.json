@@ -2,11 +2,14 @@
   "_info": "Diubah lewat /admin/. Kosongkan idr untuk menampilkan 'Harga segera hadir'.",
   "paket": {
     "kintamani": {
-      "idr": "",
+      "idr": "800000",
+      "idr_half": "600000",
       "usd": "",
-      "catatan": "",
-      "catatan_en": "",
-      "aktif": false
+      "catatan": "Full day (8–10 jam)",
+      "catatan_en": "Full day (8–10 hours)",
+      "aktif": true,
+      "satuan": "",
+      "satuan_en": ""
     },
     "ubud": {
       "idr": "700000",
