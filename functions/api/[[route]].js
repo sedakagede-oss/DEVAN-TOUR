@@ -1,4 +1,5 @@
 const enc = new TextEncoder();
+const ITERATIONS = 8000;
 
 function json(data, status) {
   return new Response(JSON.stringify(data), {
@@ -8,17 +9,23 @@ function json(data, status) {
 }
 
 function b64(buf) {
-  return btoa(String.fromCharCode(...new Uint8Array(buf)));
+  const bytes = new Uint8Array(buf);
+  var s = '';
+  for (var i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+  return btoa(s);
 }
 
 function unb64(s) {
-  return Uint8Array.from(atob(s), function (c) { return c.charCodeAt(0); });
+  const raw = atob(s);
+  const out = new Uint8Array(raw.length);
+  for (var i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
+  return out;
 }
 
 async function pbkdf2(password, saltB64) {
   const salt = unb64(saltB64);
   const key = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveBits']);
-  const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: salt, iterations: 120000 }, key, 256);
+  const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: salt, iterations: ITERATIONS }, key, 256);
   return b64(bits);
 }
 
@@ -65,51 +72,57 @@ export async function onRequest(context) {
   const route = parts.slice(1).join('/');
   const method = request.method.toUpperCase();
 
-  if (route === 'admin' || route === 'admin/status') {
-    if (method !== 'GET') return json({ error: 'method' }, 405);
-    const auth = await getAuth(env);
-    return json({ setupNeeded: !auth });
-  }
-
-  if (route === 'admin/setup') {
-    if (method !== 'POST') return json({ error: 'method' }, 405);
-    if (await getAuth(env)) return json({ error: 'already' }, 409);
-    const body = await readBody(request);
-    const password = String((body && body.password) || '');
-    if (password.length < 8) return json({ error: 'short' }, 400);
-    const salt = newSalt();
-    const hash = await pbkdf2(password, salt);
-    await env.HARGA.put('admin-auth', JSON.stringify({ salt: salt, hash: hash }));
-    return json({ ok: true });
-  }
-
-  if (route === 'admin/login') {
-    if (method !== 'POST') return json({ error: 'method' }, 405);
-    const body = await readBody(request);
-    const password = String((body && body.password) || '');
-    if (!(await checkPassword(env, password))) return json({ error: 'auth' }, 401);
-    return json({ ok: true });
-  }
-
-  if (route === 'harga') {
-    if (method === 'GET') {
-      const saved = env.HARGA && await env.HARGA.get('harga.json');
-      if (saved) {
-        return new Response(saved, { headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
-      }
-      return fetch(new URL('/data/harga.json', url.origin));
+  try {
+    if (route === 'admin' || route === 'admin/status') {
+      if (method !== 'GET') return json({ error: 'method' }, 405);
+      const auth = await getAuth(env);
+      return json({ setupNeeded: !auth, hasKv: !!env.HARGA });
     }
-    if (method === 'POST' || method === 'PUT') {
+
+    if (route === 'admin/setup') {
+      if (method !== 'POST') return json({ error: 'method' }, 405);
+      if (!env.HARGA) return json({ error: 'kv-missing' }, 500);
+      if (await getAuth(env)) return json({ error: 'already' }, 409);
       const body = await readBody(request);
-      const password = readPassword(request, body);
-      if (!(await checkPassword(env, password))) return json({ error: 'auth' }, 401);
-      const data = body && body.paket ? body : (body && body.data);
-      if (!validHarga(data)) return json({ error: 'invalid' }, 400);
-      await env.HARGA.put('harga.json', JSON.stringify(data));
+      const password = String((body && body.password) || '');
+      if (password.length < 8) return json({ error: 'short' }, 400);
+      const salt = newSalt();
+      const hash = await pbkdf2(password, salt);
+      await env.HARGA.put('admin-auth', JSON.stringify({ salt: salt, hash: hash }));
       return json({ ok: true });
     }
-    return json({ error: 'method' }, 405);
-  }
 
-  return json({ error: 'not found' }, 404);
+    if (route === 'admin/login') {
+      if (method !== 'POST') return json({ error: 'method' }, 405);
+      const body = await readBody(request);
+      const password = String((body && body.password) || '');
+      if (!(await checkPassword(env, password))) return json({ error: 'auth' }, 401);
+      return json({ ok: true });
+    }
+
+    if (route === 'harga') {
+      if (method === 'GET') {
+        const saved = env.HARGA && await env.HARGA.get('harga.json');
+        if (saved) {
+          return new Response(saved, { headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
+        }
+        return fetch(new URL('/data/harga.json', url.origin));
+      }
+      if (method === 'POST' || method === 'PUT') {
+        if (!env.HARGA) return json({ error: 'kv-missing' }, 500);
+        const body = await readBody(request);
+        const password = readPassword(request, body);
+        if (!(await checkPassword(env, password))) return json({ error: 'auth' }, 401);
+        const data = body && body.paket ? body : (body && body.data);
+        if (!validHarga(data)) return json({ error: 'invalid' }, 400);
+        await env.HARGA.put('harga.json', JSON.stringify(data));
+        return json({ ok: true });
+      }
+      return json({ error: 'method' }, 405);
+    }
+
+    return json({ error: 'not found' }, 404);
+  } catch (e) {
+    return json({ error: 'server', detail: String(e && e.message || e) }, 500);
+  }
 }

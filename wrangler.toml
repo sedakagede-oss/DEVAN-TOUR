@@ -5,3 +5,11 @@ pages_build_output_dir = "."
 [[kv_namespaces]]
 binding = "HARGA"
 id = "aaa78fc62cd9478c9393bdce3b390d8a"
+
+[[env.production.kv_namespaces]]
+binding = "HARGA"
+id = "aaa78fc62cd9478c9393bdce3b390d8a"
+
+[[env.preview.kv_namespaces]]
+binding = "HARGA"
+id = "aaa78fc62cd9478c9393bdce3b390d8a"
