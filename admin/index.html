@@ -4,7 +4,7 @@
 <script>if(location.hostname==='sedakagede-oss.github.io'){var p=location.pathname.replace(/^\/DEVAN-TOUR\/?/,'/').replace(/^\/devan-bali-tour\/?/,'/');location.replace('https://devan-tour.pages.dev'+p+location.search+location.hash)}</script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Admin Harga — DEVAN TOUR</title>
+<title>Admin Harga &amp; Ulasan — DEVAN TOUR</title>
 <link rel="icon" href="../favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -19,10 +19,22 @@ button{font:600 1rem Poppins,sans-serif;border:0;border-radius:8px;padding:.75re
 .bar{position:sticky;bottom:0;background:#fff;border-top:1px solid #e3e9f0;padding:.8rem 0}.bar .w{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}
 #msg{font-weight:600}.ok{color:#14874f}.err{color:#c62828}.pv{font-size:.85rem;color:#1a73c8;margin-top:.4rem}
 @media(max-width:600px){.g{grid-template-columns:1fr}}
+
+.ur{border:1px solid #e3e9f0;border-radius:8px;padding:.85rem;margin:.6rem 0;background:#fafbfd}
+.ur-h{display:flex;flex-wrap:wrap;gap:.4rem .8rem;align-items:center;margin-bottom:.35rem}
+.ur-stars{color:#f5b301;letter-spacing:1px}.ur-meta{font-size:.78rem;color:#5d6b7a}
+.ur-komen{margin:.35rem 0 .7rem;white-space:pre-wrap;word-break:break-word;line-height:1.45}
+.ur button{padding:.45rem .9rem;font-size:.85rem;margin-right:.4rem}
+.ur button.danger{background:#c62828}.ur button.okb{background:#14874f}
+.tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin:1rem 0 0}
+.tabs button{background:#e3e9f0;color:#1d2733;padding:.5rem 1rem;font-size:.85rem}
+.tabs button.on{background:#1a73c8;color:#fff}
+#ulasan-box h3{margin:1rem 0 .4rem;font-size:.95rem}
+.empty-u{color:#5d6b7a;font-size:.9rem}
 </style>
 </head>
 <body>
-<header><div class="w"><img src="../images/logo-round-sm.png" alt=""><div><h1>Admin Harga Paket — DEVAN TOUR</h1><div style="font-size:.8rem;opacity:.9">Ubah harga tur, lalu tekan Simpan. Perubahan langsung tampil di website.</div></div></div></header>
+<header><div class="w"><img src="../images/logo-round-sm.png" alt=""><div><h1>Admin Harga &amp; Ulasan — DEVAN TOUR</h1><div style="font-size:.8rem;opacity:.9">Ubah harga tur dan setujui/hapus ulasan tamu. Perubahan harga langsung tampil di website.</div></div></div></header>
 <main class="w">
 <section class="box" id="login">
 <h2 id="ltitle">Masuk</h2>
@@ -34,6 +46,11 @@ button{font:600 1rem Poppins,sans-serif;border:0;border-radius:8px;padding:.75re
 <p id="lmsg" class="hint"></p>
 </section>
 <form id="form" hidden></form>
+<section class="box" id="ulasan-box" hidden>
+<h2>Ulasan Tamu</h2>
+<p class="hint">Ulasan baru menunggu persetujuan sebelum tampil di website. Tekan Setujui atau Hapus.</p>
+<div id="ulasan-list"><p class="empty-u">Memuat ulasan…</p></div>
+</section>
 </main>
 <div class="bar" id="bar" hidden><div class="w"><button id="save">Simpan Harga</button><a href="../" target="_blank">Lihat website ↗</a><span id="msg"></span></div></div>
 <script>
@@ -66,7 +83,7 @@ async function load(){
   if(r.status===401){$('lmsg').innerHTML='<span class="err">Kata sandi salah.</span>';return false}
   if(!r.ok){$('lmsg').innerHTML='<span class="err">Gagal memuat harga ('+r.status+').</span>';return false}
   data=await r.json();build();
-  $('lmsg').innerHTML='<span class="ok">Berhasil masuk.</span>';$('out').hidden=false;$('go').hidden=true;$('pw').disabled=true;$('remember').disabled=true;return true
+  $('lmsg').innerHTML='<span class="ok">Berhasil masuk.</span>';$('out').hidden=false;$('go').hidden=true;$('pw').disabled=true;$('remember').disabled=true;$('ulasan-box').hidden=false;loadUlasan();return true
 }
 function build(){
   const f=$('form');f.innerHTML='';
@@ -117,6 +134,50 @@ $('save').onclick=async()=>{
   else if(r.status===401){m.className='err';m.textContent='Sesi habis. Masuk lagi, lalu simpan.'}
   else{m.className='err';m.textContent='Gagal menyimpan ('+r.status+').'}
 };
+
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]))}
+function stars(n){n=Math.max(0,Math.min(5,Number(n)||0));return '★'.repeat(n)+'☆'.repeat(5-n)}
+function fmtTs(ts){try{return new Date(ts).toLocaleString('id-ID')}catch(e){return ''}}
+async function loadUlasan(){
+  const box=$('ulasan-list');box.innerHTML='<p class="empty-u">Memuat ulasan…</p>';
+  const r=await fetch('/api/ulasan/admin?t='+Date.now(),{headers:authHeaders(),cache:'no-store'});
+  if(r.status===401){box.innerHTML='<p class="empty-u err">Sesi habis. Masuk lagi.</p>';return}
+  if(!r.ok){box.innerHTML='<p class="empty-u err">Gagal memuat ulasan.</p>';return}
+  const d=await r.json();const paket=d.paket||{};
+  let html='';let pendingN=0,approvedN=0;
+  for(const k of Object.keys(NAMES)){
+    const block=paket[k]||{pending:[],approved:[]};
+    pendingN+=block.pending.length;approvedN+=block.approved.length;
+  }
+  html+='<p class="hint">Menunggu: <b>'+pendingN+'</b> · Disetujui: <b>'+approvedN+'</b></p>';
+  function renderItem(slug,item,status){
+    return `<div class="ur" data-paket="${esc(slug)}" data-id="${esc(item.id)}" data-status="${esc(status)}">
+<div class="ur-h"><strong>${esc(NAMES[slug]||slug)}</strong><span class="ur-stars">${stars(item.bintang)}</span><span class="ur-meta">${esc(item.nama)} · ${esc(fmtTs(item.ts))}</span></div>
+<div class="ur-komen">${esc(item.komentar)}</div>
+<div>${status==='pending'?`<button type="button" class="okb" data-act="approve">Setujui</button>`:''}<button type="button" class="danger" data-act="delete">Hapus</button></div>
+</div>`;
+  }
+  html+='<h3>Menunggu persetujuan</h3>';
+  let pend='';
+  for(const k of Object.keys(NAMES)){for(const item of (paket[k].pending||[]))pend+=renderItem(k,item,'pending')}
+  html+=pend||'<p class="empty-u">Tidak ada ulasan menunggu.</p>';
+  html+='<h3>Sudah disetujui</h3>';
+  let appr='';
+  for(const k of Object.keys(NAMES)){for(const item of (paket[k].approved||[]))appr+=renderItem(k,item,'approved')}
+  html+=appr||'<p class="empty-u">Belum ada ulasan disetujui.</p>';
+  box.innerHTML=html;
+}
+$('ulasan-list').addEventListener('click',async e=>{
+  const btn=e.target.closest('button[data-act]');if(!btn)return;
+  const card=btn.closest('.ur');if(!card)return;
+  const act=btn.dataset.act,paket=card.dataset.paket,id=card.dataset.id,status=card.dataset.status;
+  btn.disabled=true;
+  const url=act==='approve'?'/api/ulasan/approve':'/api/ulasan/delete';
+  const body=act==='approve'?{paket,id}:{paket,id,status};
+  const r=await fetch(url,{method:'POST',headers:authHeaders(),body:JSON.stringify(body)});
+  if(!r.ok){btn.disabled=false;alert('Gagal ('+r.status+')');return}
+  await loadUlasan();
+});
 (async()=>{
   try{
     const st=await status();
