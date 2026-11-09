@@ -1,6 +1,6 @@
 /* Ulasan tamu DEVAN TOUR — bintang + nama + komentar. Konten user hanya via textContent. */
 (function () {
-  var SLUGS = ['kintamani', 'ubud', 'uluwatu', 'nusa-penida', 'tanah-lot', 'bedugul'];
+  var SLUGS = ['kintamani', 'lovina', 'ubud', 'uluwatu', 'nusa-penida', 'tanah-lot', 'bedugul'];
 
   function t(s) { return window.t ? window.t(s) : s; }
   function en() { return document.documentElement.lang === 'en'; }

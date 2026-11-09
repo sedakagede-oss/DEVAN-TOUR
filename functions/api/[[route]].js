@@ -1,6 +1,6 @@
 const enc = new TextEncoder();
 const ITERATIONS = 8000;
-const PAKET_SLUGS = ['kintamani', 'ubud', 'uluwatu', 'nusa-penida', 'tanah-lot', 'bedugul'];
+const PAKET_SLUGS = ['kintamani', 'lovina', 'ubud', 'uluwatu', 'nusa-penida', 'tanah-lot', 'bedugul'];
 const RATE_TTL = 60;
 
 function json(data, status) {

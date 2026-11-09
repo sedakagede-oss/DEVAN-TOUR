@@ -51,6 +51,16 @@
       "catatan": "",
       "catatan_en": "",
       "aktif": false
+    },
+    "lovina": {
+      "idr": "1100000",
+      "idr_half": "950000",
+      "usd": "",
+      "catatan": "Full day (8–10 jam)",
+      "catatan_en": "Full day (8–10 hours)",
+      "aktif": true,
+      "satuan": "",
+      "satuan_en": ""
     }
   }
 }
