@@ -115,6 +115,7 @@ body.menu-lock{overflow:hidden}body.menu-lock .wa{display:none}
 .sharebtn svg{width:16px;height:16px;flex:0 0 auto}
 .share-wa{background:#25D366;color:#fff;border-color:#1ebe5d}
 .share-fb{background:#1877F2;color:#fff;border-color:#166fe5}
+.share-tw{background:#1DA1F2;color:#fff;border-color:#1a94da}
 .share-tg{background:#229ED9;color:#fff;border-color:#1c8ec4}
 .share-tt{background:#111;color:#fff;border-color:#111}
 .share-copy,.share-native{background:transparent}
