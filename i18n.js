@@ -15,6 +15,13 @@ function apply(l){
 }
 window.t=s=>window.LANG==='en'&&EN[s]?EN[s]:s;
 window.setLang=apply;
-document.addEventListener('click',e=>{const b=e.target.closest('.lang-btn');if(b)apply(b.dataset.lang)});
+document.addEventListener('click',e=>{const b=e.target.closest('.lang-btn');if(!b)return;const l=b.dataset.lang;if(!l)return;
+ const path=location.pathname||'';
+ const isEn=path==='/en'||path==='/en/'||path.indexOf('/en/')===0;
+ if(l==='en'&&!isEn){let np=path;if(np.endsWith('/index.html'))np=np.slice(0,-10);if(np.endsWith('/'))np=np.slice(0,-1)||'';
+  if(np===''||np==='/' ){location.href='/en/'+(location.search||'')+(location.hash||'');return;}
+  location.href='/en'+np+(location.search||'')+(location.hash||'');return;}
+ if(l==='id'&&isEn){let np=path.replace(/^\/en/,'')||'/';location.href=np+(location.search||'')+(location.hash||'');return;}
+ apply(l);});
 apply(window.__lang||'id');
 })();
