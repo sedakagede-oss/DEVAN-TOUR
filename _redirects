@@ -1,0 +1,18 @@
+# Package pretty URLs: keep old .html links working
+
+/paket/kintamani.html  /paket/kintamani  301
+/en/paket/kintamani.html  /en/paket/kintamani  301
+/paket/lovina.html  /paket/lovina  301
+/en/paket/lovina.html  /en/paket/lovina  301
+/paket/ubud.html  /paket/ubud  301
+/en/paket/ubud.html  /en/paket/ubud  301
+/paket/uluwatu.html  /paket/uluwatu  301
+/en/paket/uluwatu.html  /en/paket/uluwatu  301
+/paket/nusa-penida.html  /paket/nusa-penida  301
+/en/paket/nusa-penida.html  /en/paket/nusa-penida  301
+/paket/tanah-lot.html  /paket/tanah-lot  301
+/en/paket/tanah-lot.html  /en/paket/tanah-lot  301
+/paket/bedugul.html  /paket/bedugul  301
+/en/paket/bedugul.html  /en/paket/bedugul  301
+/paket/lempuyang.html  /paket/lempuyang  301
+/en/paket/lempuyang.html  /en/paket/lempuyang  301

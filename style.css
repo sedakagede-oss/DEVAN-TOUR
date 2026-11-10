@@ -156,3 +156,11 @@ body.menu-lock{overflow:hidden}body.menu-lock .wa{display:none}
 [data-theme=dark] .ul-stars .ul-star.on,[data-theme=dark] .ul-pick-star.on,[data-theme=dark] .ul-pick-star.hov{color:#f5b301}
 [data-theme=dark] .ul-err{color:#ff8a80}
 @media(max-width:600px){.ulasan-sec{padding:2.4rem 0}.ul-form{padding:1.05rem}.ul-date{margin-left:0;width:100%}}
+
+/* FAQ on package pages */
+.faq{max-width:760px}
+.faq-item{margin:0 0 1rem}
+.faq h3{margin:0 0 .3rem;font-size:1.05rem}
+.faq p{margin:0;color:var(--muted,#445)}
+.rev-cta{margin:.75rem 0 0}
+.rev-cta a{font-weight:600}

@@ -46,15 +46,28 @@
       "aktif": false
     },
     "bedugul": {
-      "idr": "",
+      "idr": "800000",
+      "idr_half": "600000",
       "usd": "",
-      "catatan": "",
-      "catatan_en": "",
-      "aktif": false
+      "catatan": "Full day (8–10 jam)",
+      "catatan_en": "Full day (8–10 hours)",
+      "aktif": true,
+      "satuan": "",
+      "satuan_en": ""
     },
     "lovina": {
       "idr": "1100000",
       "idr_half": "950000",
+      "usd": "",
+      "catatan": "Full day (8–10 jam)",
+      "catatan_en": "Full day (8–10 hours)",
+      "aktif": true,
+      "satuan": "",
+      "satuan_en": ""
+    },
+    "lempuyang": {
+      "idr": "1000000",
+      "idr_half": "",
       "usd": "",
       "catatan": "Full day (8–10 jam)",
       "catatan_en": "Full day (8–10 hours)",

@@ -1,6 +1,6 @@
 /* Ulasan tamu DEVAN TOUR — bintang + nama + komentar. Konten user hanya via textContent. */
 (function () {
-  var SLUGS = ['kintamani', 'lovina', 'ubud', 'uluwatu', 'nusa-penida', 'tanah-lot', 'bedugul'];
+  var SLUGS = ['kintamani', 'lovina', 'ubud', 'uluwatu', 'nusa-penida', 'tanah-lot', 'bedugul', 'lempuyang'];
 
   function t(s) { return window.t ? window.t(s) : s; }
   function en() { return document.documentElement.lang === 'en'; }
@@ -8,7 +8,7 @@
   function detectPaket() {
     var el = document.querySelector('[data-ulasan-paket]');
     if (el && el.getAttribute('data-ulasan-paket')) return el.getAttribute('data-ulasan-paket');
-    var m = (location.pathname || '').match(/\/paket\/([a-z0-9-]+)\.html/i);
+    var m = (location.pathname || '').match(/\/paket\/([a-z0-9-]+)(?:\.html)?\/?$/i);
     return m ? m[1].toLowerCase() : '';
   }
 
@@ -243,12 +243,19 @@
     h2.textContent = t('Ulasan Tamu');
     var sub = el('p', 'sub');
     sub.textContent = t('Bagikan pengalaman Anda setelah tur bersama DEVAN TOUR.');
+    var cta = el('p', 'rev-cta');
+    var a = el('a');
+    a.href = '#ulasan-form';
+    a.textContent = t('Tulis ulasan Anda');
+    cta.appendChild(a);
+    cta.appendChild(document.createTextNode(t(' — cukup pilih bintang, isi nama, dan ceritakan tur Anda.')));
+    head.appendChild(cta);
     head.appendChild(h2); head.appendChild(sub);
     root.appendChild(head);
 
     var sum = el('div', 'ul-summary');
     var list = el('div', 'ul-list');
-    var formWrap = el('div', 'ul-form-wrap');
+    var formWrap = el('div', 'ul-form-wrap'); formWrap.id = 'ulasan-form';
     root.appendChild(sum);
     root.appendChild(list);
     root.appendChild(formWrap);
@@ -279,6 +286,13 @@
       }
       h2.textContent = t('Ulasan Tamu');
       sub.textContent = t('Bagikan pengalaman Anda setelah tur bersama DEVAN TOUR.');
+    var cta = el('p', 'rev-cta');
+    var a = el('a');
+    a.href = '#ulasan-form';
+    a.textContent = t('Tulis ulasan Anda');
+    cta.appendChild(a);
+    cta.appendChild(document.createTextNode(t(' — cukup pilih bintang, isi nama, dan ceritakan tur Anda.')));
+    head.appendChild(cta);
       load();
     }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
   }
